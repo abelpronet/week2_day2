@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>jQuery</title>
+    <style>
+        .oculto {
+            display: none
+        }
+
+        .amarillo {
+            background: yellow
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+        
+        <section>
+                <h1 id="primero">Seccion 1</h1>
+                <p class="special">Lorem ipsum dolor sit amet</p>
+                <p class="special2">Lorem ipsum dolor sit amet</p>
+                <p class="superspecial">Lorem ipsum dolor sit amet</p>
+                <p>Lorem ipsum dolor sit amet</p>
+                <p>Lorem ipsum dolor sit amet</p>
+                <p>Lorem ipsum dolor sit amet</p>
+                <p class="oculto">Lorem ipsum dolor sit amet</p>
+            </section>
+            <section>
+                <h1>Seccion 2</h1>
+                <p>Lorem ipsum dolor sit amet</p>
+                <p>Lorem ipsum dolor sit amet</p>
+                <p>Lorem ipsum dolor sit amet</p>
+                <p>Lorem ipsum dolor sit amet detector</p>
+                <p>Lorem ipsum dolor sit amet</p>
+                <p></p>
+                <input type="text" value="Field value">
+                <button>HAZME CLICK :)</button>
+                
+            </section>
+            <section style="height:200px"></section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    
+    <script>
+
+        $(document).ready(function() {
+
+            //basicFilters()
+            //contentFilters()
+            //visibilityFilters()
+            //attributeFilters()
+            //childfilters()
+            //attributeStuff()
+            //CSSmanipulation()
+            //dimensionsStuff()
+            //trasversingSelections()
+            //contentManipulation()
+            //effects()
+
+
+            // events
+            $('button').on('click', function(){
+                alert("DUMMY TEXT")
+            })
+
+            $('p').on('mouseenter', function(){
+                $(this).css('color', 'red')
+            })
+
+            $('p').on('mouseleave', function(){
+                $(this).css('color', 'black')
+            })
+
+            $('p').on('click', function(){
+
+                if ($(this).hasClass('special')) {
+
+                    $(this).css('background','red')
+                    alert("'special' class clicked")
+                }
+            })
+
+            $('input[type="text"]').on('keyup', function(e){    // event object
+
+                console.log(e)
+                
+                var formText = $(this).val().toUpperCase()      // this refers to the object invoking function
+                $(this).val(formText)
+
+                if (e.keyCode === 27) {                         // keyCode = pressed key global code
+
+                    $(this).val("")
+                }
+            })
+
+            $(document).on('mousemove', function(e){
+
+                console.log(e.screenX)
+                console.log(e.screenY)
+            })
+        })
+
+
+
+        function effects(){
+
+            $('h1').hide(5000, function(){
+                alert("DONE!")
+            })
+
+
+            $('.oculto').show(5000, function(){
+                alert("DONE!")
+            })
+
+
+            $('h1').fadeOut(1000, function(){
+                alert("DONE!")
+            })
+
+
+            $('.oculto').toggle(5000)
+            setTimeout(function(){
+                $('.oculto').toggle(5000)
+            }, 10000)
+
+
+            $('.oculto').fadeToggle(5000)
+            setTimeout(function(){
+                $('.oculto').fadeToggle(5000)
+            }, 10000)
+        }
+
+        function contentManipulation(){
+            $('section').prepend('<h2>Soy nuevo, y voy al inicio</h2>')
+            $('section').append('<h2>Soy nuevo, y yo al final</h2>')
+            $('h1').html('Soy un <em>gran</em> título')
+        }
+
+        function trasversingSelections(){
+            $('.special').closest('section').css('background', 'red')
+            $('.special').next().css('background', 'green')
+            $('.special').parent().css('background', 'blue')
+        }
+
+        function dimensionsStuff(){
+            $('h1').height('500px')
+            //$('h1').width('500px')
+        }
+
+        function CSSmanipulation(){
+            $('.special').addClass('amarillo')
+            // removeClass(), hasClass(), toggleClass()
+        }
+
+        function attributeStuff(){
+        
+            var idValue = $('section:first-child h1').attr('id')    // getter
+            alert(idValue)
+
+
+            $('section:first-child h1').attr('id', 'segundo')       // setter
+
+
+            var inputValue = $('input[type="text"]').val()          // getter
+            alert(inputValue)
+
+
+            $('input[type="text"]').val('Este valor')               // setter
+
+
+            setTimeout(function(){
+                alert( $('input').attr('value') )       // only checks attribute
+                alert( $('input').prop('value') )       // checks property (status - real time!)
+            }, 3000)
+        }
+
+
+        function childfilters(){
+            $('h1:first-child').text('¡Soy hijo primero!')
+            $('p:last-child').text('¡Soy hijo ultimo!')
+            $('p:nth-child(2)').text('¡Soy hijo segundo!')
+            $('p:nth-child(odd)').text('¡Soy par!')
+            $('p:nth-child(even)').text('¡Soy impar!')
+            $('p:nth-child(3n)').text('¡Soy el tercero de cada serie de tres!')
+        }
+
+
+        function attributeFilters(){
+            $('p[class*="special"]').text('Somos especiales')
+        }
+
+        function visibilityFilters(){
+            $('p:hidden').text("No se me ve");
+            $('p:visible').text("Sí se me ve");
+        }
+
+        function basicFilters(){
+            $('p:first').text('Soy primero')
+            $('p:last').text('Soy último')
+            $('p:odd').css('color','blue')
+            $('p:even').css('background','red')
+            $('p:not(.special)').css('text-transform', 'uppercase')
+        }
+
+        function contentFilters(){
+            $('p:contains(detector)').css('background', 'red')
+            $('section:empty').css('background', 'green')
+            $('section:has(.special)').css('background', 'pink')
+        }
+
+        $(window).on("load", function() {
+            console.log("DOM & Images are Loaded - this fires AFTER document ready");
+        })
+
+
+        
+    
+    </script>
+</body>
+</html>
